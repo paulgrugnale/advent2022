@@ -1,4 +1,4 @@
-fun main() { // ktlint-disable filename
+fun main() {
     fun part1(input: List<String>): Int {
         var answer = 0
         var runningTotal = 0
@@ -16,7 +16,19 @@ fun main() { // ktlint-disable filename
     }
 
     fun part2(input: List<String>): Int {
-        return input.size
+
+        val delimiters = input.mapIndexedNotNull {
+            index, s -> index.takeIf { s.isEmpty() }
+        }
+
+        val groups = delimiters.mapIndexed {
+            index, d -> input.subList(if (index == 0) 0 else delimiters[index-1] +1, d)
+        }
+
+        return groups.map {
+            it.fold(0) { sum, str -> sum + str.toInt() }
+        }.sortedDescending().take(3).sum()
+
     }
 
     // test if implementation meets criteria from the description, like:
