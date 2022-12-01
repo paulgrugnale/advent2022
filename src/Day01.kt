@@ -1,6 +1,18 @@
-fun main() {
+fun main() { // ktlint-disable filename
     fun part1(input: List<String>): Int {
-        return input.size
+        var answer = 0
+        var runningTotal = 0
+
+        input.forEach {
+            if (it.isNotEmpty()) {
+                runningTotal += it.toInt()
+            } else {
+                answer = answer.coerceAtLeast(runningTotal)
+                runningTotal = 0
+            }
+        }
+
+        return answer
     }
 
     fun part2(input: List<String>): Int {
@@ -8,8 +20,8 @@ fun main() {
     }
 
     // test if implementation meets criteria from the description, like:
-    val testInput = readInput("Day01_test")
-    check(part1(testInput) == 1)
+//    val testInput = readInput("Day01_test")
+//    check(part1(testInput) == 1)
 
     val input = readInput("Day01")
     println(part1(input))
